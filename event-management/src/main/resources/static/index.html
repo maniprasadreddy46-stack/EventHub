@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management System</title>
+</head>
+<body>
+
+    <h1>Event Management System</h1>
+
+    <h2>Welcome!</h2>
+
+    <p>Spring Boot backend is connected successfully.</p>
+
+    <button onclick="loadEvents()">View Events</button>
+
+    <div id="events"></div>
+
+    <script>
+        async function loadEvents() {
+            const response = await fetch('/api/events');
+            const events = await response.json();
+
+            const div = document.getElementById('events');
+
+            div.innerHTML = '';
+
+            events.forEach(event => {
+                div.innerHTML += `
+                    <div>
+                        <h3>${event.name}</h3>
+                        <p>${event.description}</p>
+                    </div>
+                `;
+            });
+        }
+    </script>
+
+</body>
+</html>

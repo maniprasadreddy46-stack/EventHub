@@ -1,0 +1,454 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f7f8fc;
+  color: #1f2937;
+}
+
+.app {
+  min-height: 100vh;
+}
+
+/* NAVBAR */
+
+.navbar {
+  height: 75px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8%;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.logo {
+  font-size: 27px;
+  font-weight: bold;
+  color: #222;
+}
+
+.logo span,
+footer span {
+  color: #6366f1;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  color: #6366f1;
+}
+
+.login-btn {
+  border: none;
+  background: #6366f1;
+  color: white;
+  padding: 11px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+/* HERO */
+
+.hero {
+  min-height: 550px;
+  display: flex;
+  align-items: center;
+  padding: 80px 8%;
+  background: linear-gradient(135deg, #eef2ff, #ffffff);
+}
+
+.hero-content {
+  max-width: 700px;
+}
+
+.small-title {
+  color: #6366f1;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 18px;
+}
+
+.hero h1 {
+  font-size: 58px;
+  line-height: 1.1;
+  color: #111827;
+  margin-bottom: 25px;
+}
+
+.hero h1 span,
+.about-section h2 span {
+  color: #6366f1;
+}
+
+.hero-text {
+  font-size: 18px;
+  line-height: 1.7;
+  color: #6b7280;
+  max-width: 600px;
+  margin-bottom: 35px;
+}
+
+.explore-btn {
+  display: inline-block;
+  text-decoration: none;
+  background: #6366f1;
+  color: white;
+  padding: 15px 28px;
+  border-radius: 9px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.explore-btn:hover {
+  transform: translateY(-2px);
+  background: #4f46e5;
+}
+
+/* EVENTS */
+
+.events-section {
+  padding: 90px 8%;
+  background: #ffffff;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-heading p {
+  color: #6366f1;
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-size: 14px;
+}
+
+.section-heading h2 {
+  font-size: 40px;
+  margin: 10px 0;
+  color: #111827;
+}
+
+.section-heading span {
+  color: #6b7280;
+}
+
+.events-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.event-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.09);
+  transition: 0.3s;
+}
+
+.event-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.13);
+}
+
+.event-image {
+  height: 170px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  position: relative;
+}
+
+.event-date {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  background: white;
+  width: 65px;
+  height: 65px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.event-date strong {
+  font-size: 23px;
+  color: #111827;
+}
+
+.event-date small {
+  color: #6366f1;
+  font-weight: bold;
+}
+
+.event-content {
+  padding: 25px;
+}
+
+.event-content h3 {
+  font-size: 23px;
+  margin-bottom: 12px;
+  color: #111827;
+}
+
+.description {
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.event-info {
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+  margin-bottom: 20px;
+}
+
+.event-info p {
+  font-size: 14px;
+  margin: 8px 0;
+  color: #555;
+}
+
+.register-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #6366f1;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.register-btn:hover {
+  background: #4f46e5;
+}
+
+.no-events {
+  text-align: center;
+  color: #777;
+}
+
+/* ABOUT */
+
+.about-section {
+  padding: 90px 8%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  align-items: center;
+  background: #f7f8fc;
+}
+
+.about-section h2 {
+  font-size: 43px;
+  line-height: 1.2;
+  margin-bottom: 25px;
+}
+
+.about-section > div:first-child > p:last-child {
+  color: #6b7280;
+  line-height: 1.8;
+  font-size: 17px;
+}
+
+.about-box {
+  display: grid;
+  gap: 18px;
+}
+
+.about-box div {
+  background: white;
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+.about-box h3 {
+  font-size: 25px;
+}
+
+.about-box h4 {
+  margin: 8px 0;
+}
+
+.about-box p {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* FOOTER */
+
+footer {
+  background: #111827;
+  color: white;
+  text-align: center;
+  padding: 40px;
+}
+
+footer h3 {
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+footer p {
+  color: #9ca3af;
+  margin: 6px;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+  .navbar {
+    padding: 0 5%;
+  }
+
+  .nav-links {
+    gap: 12px;
+  }
+
+  .nav-links a {
+    display: none;
+  }
+
+  .hero {
+    padding: 60px 6%;
+  }
+
+  .hero h1 {
+    font-size: 40px;
+  }
+
+  .about-section {
+    grid-template-columns: 1fr;
+    padding: 60px 6%;
+  }
+
+  .events-section {
+    padding: 60px 6%;
+  }
+}
+
+
+/* REGISTRATION MODAL */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.registration-modal {
+  width: 100%;
+  max-width: 480px;
+  background: white;
+  border-radius: 18px;
+  padding: 35px;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.registration-modal h2 {
+  text-align: center;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+.selected-event {
+  text-align: center;
+  color: #6366f1;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+.close-btn {
+  position: absolute;
+  right: 18px;
+  top: 15px;
+  border: none;
+  background: none;
+  font-size: 30px;
+  cursor: pointer;
+  color: #555;
+}
+
+.registration-modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+.registration-modal label {
+  margin-bottom: 7px;
+  margin-top: 12px;
+  font-weight: bold;
+  color: #374151;
+}
+
+.registration-modal input {
+  padding: 13px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+}
+
+.registration-modal input:focus {
+  border-color: #6366f1;
+}
+
+.submit-registration {
+  margin-top: 25px;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background: #6366f1;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.submit-registration:hover {
+  background: #4f46e5;
+}
+
+.registration-message {
+  text-align: center;
+  margin-top: 18px;
+  font-weight: bold;
+  color: #16a34a;
+}
