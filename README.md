@@ -58,3 +58,18 @@ EventHub/
 │   └── React Frontend
 │
 └── .gitignore
+
+
+## 📸 Screenshots
+
+### 🔐 Login Page
+![Login Page](login.png)
+
+### 📝 Registration Page
+![Registration Page](registration.png)
+
+### 👨‍🎓 Student Dashboard
+![Student Dashboard](student-dashboard.png)
+
+### 👨‍💼 Admin Dashboard
+![Admin Dashboard](admin-dashboard.png)
