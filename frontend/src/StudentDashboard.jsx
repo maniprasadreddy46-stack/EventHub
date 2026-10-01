@@ -7,13 +7,20 @@ function StudentDashboard() {
   const [registrations, setRegistrations] = useState([]);
   const [message, setMessage] = useState("");
 
+  // Mobile number popup
+  const [phone, setPhone] = useState("");
+  const [showPhoneModal, setShowPhoneModal] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+
   const studentName =
     localStorage.getItem("studentName") || "Student";
 
   const studentEmail =
     localStorage.getItem("studentEmail") || "";
 
+  // =========================
   // Load all events
+  // =========================
   const loadEvents = async () => {
     try {
       const response = await axios.get(
@@ -27,7 +34,9 @@ function StudentDashboard() {
     }
   };
 
+  // =========================
   // Load student's registrations
+  // =========================
   const loadRegistrations = async () => {
     try {
       if (!studentEmail) {
@@ -49,21 +58,42 @@ function StudentDashboard() {
     }
   };
 
+  // =========================
   // Load data when dashboard opens
+  // =========================
   useEffect(() => {
     loadEvents();
     loadRegistrations();
   }, []);
 
-  // Register for an event
+  // =========================
+  // Register for event
+  // =========================
   const registerForEvent = async (event) => {
+    const cleanPhone = phone.trim();
+
+    // Check mobile number
+    if (!cleanPhone) {
+      setMessage(
+        "Please enter your mobile number."
+      );
+      return false;
+    }
+
+    if (!/^[0-9]{10}$/.test(cleanPhone)) {
+      setMessage(
+        "Please enter a valid 10-digit mobile number."
+      );
+      return false;
+    }
+
     try {
       await axios.post(
         `http://localhost:8080/api/registrations/event/${event.id}`,
         {
           name: studentName,
           email: studentEmail,
-          phone: "Not provided",
+          phone: cleanPhone,
         }
       );
 
@@ -71,9 +101,17 @@ function StudentDashboard() {
         `Successfully registered for ${event.name}! 🎉`
       );
 
-      // Refresh registrations
-      loadRegistrations();
+      // Clear mobile number
+      setPhone("");
 
+      // Close popup
+      setShowPhoneModal(false);
+      setSelectedEvent(null);
+
+      // Refresh registrations
+      await loadRegistrations();
+
+      return true;
     } catch (error) {
       console.error(
         "Registration error:",
@@ -82,12 +120,16 @@ function StudentDashboard() {
 
       setMessage(
         error.response?.data ||
-        "Registration failed. Please try again."
+          "Registration failed. Please try again."
       );
+
+      return false;
     }
   };
 
+  // =========================
   // Logout
+  // =========================
   const handleLogout = () => {
     localStorage.removeItem("studentName");
     localStorage.removeItem("studentEmail");
@@ -99,7 +141,9 @@ function StudentDashboard() {
   return (
     <div className="app">
 
-      {/* Navbar */}
+      {/* =========================
+          Navbar
+      ========================= */}
       <nav className="navbar">
 
         <div className="logo">
@@ -123,7 +167,10 @@ function StudentDashboard() {
 
       </nav>
 
-      {/* Dashboard */}
+
+      {/* =========================
+          Dashboard
+      ========================= */}
       <section className="events-section">
 
         {/* Heading */}
@@ -140,6 +187,7 @@ function StudentDashboard() {
           </span>
 
         </div>
+
 
         {/* Message */}
         {message && (
@@ -159,7 +207,10 @@ function StudentDashboard() {
           </div>
         )}
 
-        {/* My Registrations */}
+
+        {/* =========================
+            My Registrations
+        ========================= */}
         <div
           style={{
             maxWidth: "1100px",
@@ -183,6 +234,7 @@ function StudentDashboard() {
           >
             My Registrations
           </h2>
+
 
           {registrations.length === 0 ? (
 
@@ -239,6 +291,7 @@ function StudentDashboard() {
 
                 </thead>
 
+
                 <tbody>
 
                   {registrations.map(
@@ -281,7 +334,10 @@ function StudentDashboard() {
 
         </div>
 
-        {/* Available Events */}
+
+        {/* =========================
+            Available Events
+        ========================= */}
         <div className="section-heading">
 
           <p>UPCOMING EVENTS</p>
@@ -292,6 +348,10 @@ function StudentDashboard() {
 
         </div>
 
+
+        {/* =========================
+            Events Cards
+        ========================= */}
         <div className="events-container">
 
           {events.length === 0 ? (
@@ -335,6 +395,7 @@ function StudentDashboard() {
 
                 </div>
 
+
                 {/* Event Details */}
                 <div className="event-content">
 
@@ -345,6 +406,7 @@ function StudentDashboard() {
                   <p className="description">
                     {event.description}
                   </p>
+
 
                   <div className="event-info">
 
@@ -362,7 +424,11 @@ function StudentDashboard() {
 
                   </div>
 
-                  {/* Registration Button */}
+
+                  {/* =========================
+                      Registration Button
+                  ========================= */}
+
                   {registrations.some(
                     (registration) =>
                       registration.event?.id === event.id
@@ -384,9 +450,12 @@ function StudentDashboard() {
 
                     <button
                       className="register-btn"
-                      onClick={() =>
-                        registerForEvent(event)
-                      }
+                      onClick={() => {
+                        setSelectedEvent(event);
+                        setPhone("");
+                        setMessage("");
+                        setShowPhoneModal(true);
+                      }}
                     >
                       Register Now
                     </button>
@@ -405,7 +474,186 @@ function StudentDashboard() {
 
       </section>
 
-      {/* Footer */}
+
+      {/* =========================
+          Mobile Number Popup
+      ========================= */}
+      {showPhoneModal && selectedEvent && (
+
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(0, 0, 0, 0.55)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 9999,
+            padding: "20px",
+            boxSizing: "border-box",
+          }}
+        >
+
+          <div
+            style={{
+              width: "100%",
+              maxWidth: "450px",
+              background: "white",
+              borderRadius: "20px",
+              padding: "30px",
+              boxShadow:
+                "0 20px 50px rgba(0,0,0,0.25)",
+              boxSizing: "border-box",
+            }}
+          >
+
+            {/* Popup Heading */}
+            <h2
+              style={{
+                textAlign: "center",
+                color: "#111827",
+                marginBottom: "10px",
+              }}
+            >
+              Event Registration
+            </h2>
+
+
+            {/* Event Name */}
+            <p
+              style={{
+                textAlign: "center",
+                color: "#6366f1",
+                fontWeight: "600",
+                marginBottom: "25px",
+              }}
+            >
+              {selectedEvent.name}
+            </p>
+
+
+            {/* Mobile Number Label */}
+            <label
+              style={{
+                display: "block",
+                fontWeight: "700",
+                marginBottom: "8px",
+                color: "#111827",
+              }}
+            >
+              Mobile Number
+            </label>
+
+
+            {/* Mobile Number Input */}
+            <input
+              type="tel"
+              value={phone}
+              onChange={(e) => {
+                const value = e.target.value
+                  .replace(/\D/g, "")
+                  .slice(0, 10);
+
+                setPhone(value);
+                setMessage("");
+              }}
+              placeholder="Enter 10-digit mobile number"
+              maxLength="10"
+              autoFocus
+              style={{
+                width: "100%",
+                padding: "14px",
+                border: "1px solid #d1d5db",
+                borderRadius: "10px",
+                fontSize: "16px",
+                boxSizing: "border-box",
+                outline: "none",
+              }}
+            />
+
+
+            {/* Helper Text */}
+            <p
+              style={{
+                fontSize: "13px",
+                color: "#6b7280",
+                marginTop: "8px",
+              }}
+            >
+              Enter your 10-digit mobile number.
+            </p>
+
+
+            {/* Popup Buttons */}
+            <div
+              style={{
+                display: "flex",
+                gap: "12px",
+                marginTop: "25px",
+              }}
+            >
+
+              {/* Cancel */}
+              <button
+                type="button"
+                onClick={() => {
+                  setShowPhoneModal(false);
+                  setSelectedEvent(null);
+                  setPhone("");
+                  setMessage("");
+                }}
+                style={{
+                  flex: 1,
+                  padding: "13px",
+                  border: "none",
+                  borderRadius: "10px",
+                  background: "#e5e7eb",
+                  color: "#374151",
+                  fontWeight: "700",
+                  fontSize: "15px",
+                  cursor: "pointer",
+                }}
+              >
+                Cancel
+              </button>
+
+
+              {/* Confirm */}
+              <button
+                type="button"
+                onClick={() =>
+                  registerForEvent(selectedEvent)
+                }
+                style={{
+                  flex: 1,
+                  padding: "13px",
+                  border: "none",
+                  borderRadius: "10px",
+                  background: "#6366f1",
+                  color: "white",
+                  fontWeight: "700",
+                  fontSize: "15px",
+                  cursor: "pointer",
+                }}
+              >
+                Confirm Registration
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      )}
+
+
+      {/* =========================
+          Footer
+      ========================= */}
       <footer>
 
         <h3>
@@ -426,7 +674,11 @@ function StudentDashboard() {
   );
 }
 
+
+// =========================
 // Table styles
+// =========================
+
 const tableHeaderStyle = {
   padding: "15px",
   textAlign: "left",
@@ -436,5 +688,6 @@ const tableCellStyle = {
   padding: "15px",
   borderBottom: "1px solid #eee",
 };
+
 
 export default StudentDashboard;
